@@ -1,0 +1,9 @@
+# Dependency directories
+backend_api/node_modules/
+backend_api/config/config.env
+# Optional npm cache directory
+.npm
+
+# dotenv environment variables file
+.env
+.env.test
