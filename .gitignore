@@ -1,6 +1,6 @@
 # Dependency directories
-backend_api/node_modules/
-backend_api/config/config.env
+FASHIONISTA-API/node_modules/
+FASHIONISTA-API/config/config.env
 # Optional npm cache directory
 .npm
 

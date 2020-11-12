@@ -23,14 +23,11 @@ const ProductSchema = new mongoose.Schema(
 
         category: {
             // Array of strings
-            type: [String],
-            required: true,
-            enum: [
-              'Books',
-              'Electronics',
-              'Beauty',
-              'Other'
-            ]
+            type: String,
+            required: [true, 'Enter the product category'],
+            trim: true,
+            maxlength: [500, 'Product category can not be more than 500 characters']
+            
         },
 
         unit_price: {
@@ -40,9 +37,9 @@ const ProductSchema = new mongoose.Schema(
             max: [1000000, 'Unit price of the product can not be more than $1,000,000']
         },
 
-        photo: {
+        picture: {
             type: String,
-            default: 'no-photo.jpg'
+            default: 'default-picture.jpg'
         },
 
         units_in_stock: {
