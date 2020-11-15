@@ -1,3 +1,4 @@
+const path = require('path');
 const ErrorResponse = require('../utils/errorResponse');
 const Product = require('../models/Product');
 const asyncHandler = require('../middleware/async');
@@ -88,4 +89,50 @@ exports.deleteProduct = asyncHandler(async (req, res, next) => {
                                 data: 
                                 { message: `Product with id ${req.params.id} has beeen successfully deleted.`} });
    
+});
+
+
+exports.productPhotoUpload = asyncHandler(async (req, res, next) => {
+    const product = await Product.findById(req.params.id);
+
+    if(!product) {
+        return  next(
+            new ErrorResponse(`Product ID: ${req.params.id} was not found`, 404)
+            );
+    }
+
+    // Checking for files
+    if(!req.files) {
+        return next(new ErrorResponse(`Please upload a file`, 400));
+    }
+
+    const file = req.files.file;
+
+    // Checking for files if images
+    if(!file.mimetype.startsWith('image')) {
+        return next(new ErrorResponse(`Please upload an image file`, 400));
+    }
+
+    // Checking the image size
+    if(file.size > process.env.MAX_FILE_UPLOAD) {
+        return next(new ErrorResponse(`Please upload an image size less 100MB.`, 400));
+    } 
+
+    // Create custom name for the image file
+    file.name = `photo_${product._id}${path.parse(file.name).ext}`;
+
+    file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async err => {
+      if (err) {
+        console.error(err);
+        return next(new ErrorResponse(`Problem with file upload`, 500));
+      } 
+  
+      await Product.findByIdAndUpdate(req.params.id, { picture: file.name });
+  
+      res.status(200).json({
+        success: true,
+        data: file.name
+      });
+
+    })
 });

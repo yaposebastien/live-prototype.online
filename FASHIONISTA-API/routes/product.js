@@ -7,10 +7,14 @@ const {
     getProducts,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    productPhotoUpload
 } = require('../controllers/products');
 
 const router = express.Router();
+
+// Path route for the photo
+router.route('/:id/photo').put(productPhotoUpload);
 
 
 // Path route without parameters

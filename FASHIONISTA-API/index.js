@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');  // Logger module for nodejs
@@ -5,6 +6,7 @@ const connectDB = require('./config/mongodb');  // MongoDB connection
 dotenv.config({ path: './config/config.env' });  // Loading the environ variables
 const colors = require('colors');
 const errorHandler = require('./middleware/error');
+const fileupload = require('express-fileupload'); // For image upload
 
 // Connecting to the MongoDB 
 connectDB();
@@ -24,6 +26,12 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
+// File Upload
+app.use(fileupload());
+
+// Setting Satatic Folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Mounting Routers of the application
 app.use('/api/v1/products', products);
@@ -34,7 +42,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000
 
 const server = app.listen(PORT, 
-           console.log(`Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold));
+           console.log(`Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.inverse));
 
 /*
 This following will handle unexpected promise rejection during MongoDB operations
