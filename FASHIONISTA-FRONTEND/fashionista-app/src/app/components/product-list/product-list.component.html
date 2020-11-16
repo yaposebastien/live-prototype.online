@@ -1,0 +1,26 @@
+<!--==========================
+      Team Section
+    ============================-->
+    
+    <section id="team">
+        <div class="container wow fadeInUp" >
+          <div class="section-header">
+            <h3 class="section-title">Online Bookstore</h3>
+            <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
+            
+          </div>
+          <div class="row"  >
+            <div class="col-lg-3 col-md-6" *ngFor="let product of products">
+              <div class="member">
+                <div class="pic"><img src="http://localhost:5000/uploads/photo_5d725a1b7b292f5f8ceff788.jpg" alt=""></div>
+                <h4>{{ product.name }}</h4>
+                <span>{{ product.category }}</span>
+                <button type="button" class="btn btn-link">{{ product.unit_price |currency:'USD':'symbol-narrow' }}</button>
+                <button type="button" class="btn btn-success btn-block">BUY NOW</button>
+              </div>
+            </div> 
+          </div>
+  
+        </div>
+      </section><!-- #team -->
+  

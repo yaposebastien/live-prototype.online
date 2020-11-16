@@ -22,7 +22,6 @@ const ProductSchema = new mongoose.Schema(
         },
 
         category: {
-            // Array of strings
             type: String,
             required: [true, 'Enter the product category'],
             trim: true,

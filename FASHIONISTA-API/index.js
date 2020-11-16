@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');  // Logger module for nodejs
 const connectDB = require('./config/mongodb');  // MongoDB connection
 dotenv.config({ path: './config/config.env' });  // Loading the environ variables
+const cors = require('cors');
 const colors = require('colors');
 const errorHandler = require('./middleware/error');
 const fileupload = require('express-fileupload'); // For image upload
@@ -28,6 +29,9 @@ if (process.env.NODE_ENV === 'development') {
 
 // File Upload
 app.use(fileupload());
+
+// Enable CORS
+app.use(cors());
 
 // Setting Satatic Folder
 app.use(express.static(path.join(__dirname, 'public')));
